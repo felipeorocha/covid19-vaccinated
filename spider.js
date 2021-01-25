@@ -29,35 +29,21 @@ const webScrapper = async () => {
       .text()
       .trim();
 
-      return vacina;
+    return vacina;
   }
 
-//   searchResults.map((item, el) => {
-//     const elementSelector = selector(el);
-
-//     console.log('Ja foi: ', extractInfo(elementSelector));
-//     return await extractInfo(elementSelector);
-//   });
-
-const getData = async () => {
+  const getData = async () => {
     return Promise.all(searchResults.map((item, el) => {
-        const elementSelector = selector(el);
-
-//     console.log('Ja foi: ', extractInfo(elementSelector));
-    return extractInfo(elementSelector);
-    }))
+      const elementSelector = selector(el);
+      return extractInfo(elementSelector);
+    }));
   }
 
   return getData().then(res => res)
-
-
 };
 
-// webScrapper()
-//     .then(res => console.log(res));
+app.get('/vacina', async (req, res) => {
+    res.send(await webScrapper())
+})
 
-    app.get('/vacina', async (req, res) => {
-        res.send(await webScrapper())
-    })
-
-    app.listen(3000);
+app.listen(3000);
